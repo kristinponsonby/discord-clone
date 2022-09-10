@@ -19,14 +19,26 @@ function Sidebar() {
     const [channels, setChannels] = useState([]);
 
     useEffect(() => {
-        db.collection('channels').onSnapshot(snapshot => (
-            setChannels(snapshot.docs.map(doc => ({
+        db.collection('channels').onSnapshot((snapshot) => 
+            setChannels(
+                snapshot.docs.map((doc) => ({
                 id: doc.id,
-                channel: doc.data()
-            })))
-        ))
-    }, [])
+                channel: doc.data(),
+            }))
+          )
+        );
+    }, []);
 
+    const handleAddChannel = () => {
+        const channelName = prompt("Enter a new channel name");
+
+        if (channelName) {
+            db.collection('channels').add({
+                channelname: channelName,
+            });
+        }
+    };
+ 
 
   return  (
    <div className="sidebar">
@@ -42,16 +54,14 @@ function Sidebar() {
                 <h4>Text Channels</h4>
             </div>
 
-            <AddIcon className="sidebar__addChannel" />
+            <AddIcon onClick={handleAddChannel} className="sidebar__addChannel" />
         </div>
     <div className="sidebar__channelsList">
-        <SidebarChannel />
-        <SidebarChannel />
-        <SidebarChannel />
-        <SidebarChannel />
-        <SidebarChannel />
+        {channels.map((channel) => (
+            <SidebarChannel />
+        ))}
     </div>
-    </div>
+    </div> 
 
     <div className="sidebar__voice">
         <SignalCellularAltIcon 
