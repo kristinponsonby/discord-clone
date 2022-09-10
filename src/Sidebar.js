@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Sidebar.css';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
@@ -10,9 +10,24 @@ import Avatar from '@mui/material/Avatar';
 import MicIcon from '@mui/icons-material/Mic';
 import HeadsetIcon from '@mui/icons-material/Headset';
 import SettingsIcon from '@mui/icons-material/Settings';
-
+import { useSelector } from 'react-redux';
+import { selectUser } from './features/userSlice';
+import db, { auth } from './firebase';
 
 function Sidebar() {
+    const user = useSelector(selectUser);
+    const [channels, setChannels] = useState([]);
+
+    useEffect(() => {
+        db.collection('channels').onSnapshot(snapshot => (
+            setChannels(snapshot.docs.map(doc => ({
+                id: doc.id,
+                channel: doc.data()
+            })))
+        ))
+    }, [])
+
+
   return  (
    <div className="sidebar">
     <div className="sidebar_top">
@@ -54,10 +69,10 @@ function Sidebar() {
       </div>
 
       <div className="sidebar__profile">
-          <Avatar src="https://gravatar.com/avatar/1c8e8a6e8d1fe52b782b280909abeb38?s=400&d=robohash&r=x" />
+          <Avatar onClick={() => auth.signOut()} src={user.photo} />
           <div className="sidebar__profileInfo">
-              <h3>@kristinponsonby</h3>
-              <p>#thisIsMyId</p>
+              <h3>{user.displayName}</h3>
+              <p>#{user.uid.substring(0,5)}</p>
           </div>
 
           <div className="sidebar__profileIcons">

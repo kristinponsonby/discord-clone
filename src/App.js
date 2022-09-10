@@ -26,11 +26,12 @@ function App() {
           email: authUser.email,
           displayName: authUser.displayName
         }))
-      } else {
+      } else { 
         //the user is logged out. 
+        dispatch(logout());
       }
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="app">
