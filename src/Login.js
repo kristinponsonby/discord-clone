@@ -12,7 +12,6 @@ function Login() {
 
   return (
     <div className="login">
-    <h2>I am the Login page</h2>
     <div className="login__logo">
         <img src ="https://cdn.worldvectorlogo.com/logos/discord-logo-color-wordmark-1.svg"
         alt="Discord logo" width="60%" align="center" />
