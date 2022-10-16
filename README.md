@@ -1,5 +1,5 @@
 A simple Discord clone built with React/Redux and firebase.
-Check it out here! https://discord-clone-dec70.firebaseapp.com/
+Check it out here! https://www.loom.com/share/fd9a695e363e4279a6888a99d6fc1ae0
 
 
 
